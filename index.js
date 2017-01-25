@@ -6,18 +6,19 @@ const dottie = require('dottie')
 
 module.exports = class CSV extends EventEmitter {
 
-    constructor(filepath, options = { flags: 'rs+', header: 1 }) {
+    constructor(filepath, options = { flags: 'a', header: 1 }) {
         super()
         this.options = options
         this.filepath = path.resolve(filepath)
+        this.readStream = fs.createReadStream(this.filepath)
+        this.writeStream = null
+        this.header = null
+        this.data = []
+        this.read()
         this.writeStream = fs.createWriteStream(this.filepath, {
             flags: this.options.flags,
             start: fs.statSync(this.filepath).size
         })
-        this.readStream = fs.createReadStream(this.filepath)
-        this.header = null
-        this.data = []
-        this.read()
     }
 
     read() {

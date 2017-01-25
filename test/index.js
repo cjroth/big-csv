@@ -1,1 +1,0 @@
-const CSV = require('../index')

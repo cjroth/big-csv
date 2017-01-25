@@ -1,0 +1,23 @@
+[{
+    "id": 1,
+    "name": "Apple",
+    "weight": 23.25,
+    "description": "A red fruit",
+    "inventory": {
+        "amount": 5,
+        "price": 1.25,
+        "date": null,
+        "manager": ""
+    }
+}, {
+    "id": 2,
+    "name": "Orange",
+    "weight": 19.68,
+    "description": "An orange colored round fruit",
+    "inventory": {
+        "amount": 9,
+        "price": 2.3,
+        "date": null,
+        "manager": ""
+    }
+}]
