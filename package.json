@@ -1,6 +1,6 @@
 {
   "name": "big-csv",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "An uncomplicated CSV reader for working with big CSV files.",
   "main": "index.js",
   "repository": "https://github.com/cjroth/big-csv",
