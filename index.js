@@ -13,7 +13,6 @@ module.exports = class CSV {
         this.writeStream = null
         this.header = null
         this.data = []
-        this.read()
         this.writeStream = fs.createWriteStream(this.filepath, {
             flags: this.options.flags,
             start: fs.statSync(this.filepath).size
@@ -26,7 +25,7 @@ module.exports = class CSV {
                 input: this.readStream
             })
             let index = 0
-            this.data.length = 0
+            this.data = []
             lineReader.on('line', line => {
                 if (index === 0) {
                     this.header = this.parseLine(line)

@@ -1,16 +1,16 @@
-# Reasonable CSV
+# Big CSV
 
-[![NPM Version](https://img.shields.io/npm/v/reasonable-csv.svg?style=flat)](https://www.npmjs.org/package/reasonable-csv)
-[![NPM Downloads](https://img.shields.io/npm/dm/reasonable-csv.svg?style=flat)](https://www.npmjs.org/package/reasonable-csv)
+[![NPM Version](https://img.shields.io/npm/v/big-csv.svg?style=flat)](https://www.npmjs.org/package/big-csv)
+[![NPM Downloads](https://img.shields.io/npm/dm/big-csv.svg?style=flat)](https://www.npmjs.org/package/big-csv)
 [![Node.js Version](https://img.shields.io/badge/node.js->=_7.4-brightgreen.svg?style=flat)](http://nodejs.org/download/)
-[![Build Status](http://img.shields.io/travis/cjroth/reasonable-csv.svg?style=flat)](https://travis-ci.org/cjroth/reasonable-csv)
-[![Coverage Status](https://img.shields.io/coveralls/cjroth/reasonable-csv.svg?style=flat)](https://coveralls.io/r/cjroth/reasonable-csv)
+[![Build Status](http://img.shields.io/travis/cjroth/big-csv.svg?style=flat)](https://travis-ci.org/cjroth/big-csv)
+[![Coverage Status](https://img.shields.io/coveralls/cjroth/big-csv.svg?style=flat)](https://coveralls.io/r/cjroth/big-csv)
 [![Gittip](http://img.shields.io/gittip/cjroth.svg)](https://www.gittip.com/cjroth/)
 
-A reasonable CSV reader and writer. It's not too complicated, but it has everything you need. ES6. Only one dependency. Writes and reads one line at a time so you can read and append as data becomes available.
+An uncomplicated CSV library (parser and serializer) that works with big CSV files. This writes and reads individual lines instead of the entire file so that you don't have to load the entire CSV file into memory. It works at the moment but I'm still hashing out the scalability of it.
 
 ## Install
-`npm install reasonable-csv` or `yarn add reasonable-csv`
+`npm install big-csv` or `yarn add big-csv`
 
 ---
 
@@ -23,7 +23,7 @@ id,name,weight,description,inventory.amount,inventory.price
 ## Reading
 
 ```
-const CSV = require('reasonable-csv')
+const CSV = require('big-csv')
 
 let csv = new CSV('fruit.csv')
 csv.read().then(console.log)

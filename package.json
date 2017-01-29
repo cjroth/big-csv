@@ -1,9 +1,9 @@
 {
-  "name": "reasonable-csv",
+  "name": "big-csv",
   "version": "1.0.0",
-  "description": "A reasonable CSV reader and writer. It's not too complicated, but it has everything you need.",
+  "description": "An uncomplicated CSV reader for working with big CSV files.",
   "main": "index.js",
-  "repository": "https://github.com/cjroth/reasonable-csv",
+  "repository": "https://github.com/cjroth/big-csv",
   "author": "Chris Roth <chris@cjroth.com>",
   "license": "MIT",
   "dependencies": {
