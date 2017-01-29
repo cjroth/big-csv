@@ -8,6 +8,7 @@ module.exports = class CSV {
     constructor(filepath, options = { flags: 'a', header: 1 }) {
         this.options = options
         this.filepath = path.resolve(filepath)
+        this.fd = fs.closeSync(fs.openSync(this.filepath, this.options.flags))
         this.readStream = fs.createReadStream(this.filepath)
         this.writeStream = null
         this.header = null

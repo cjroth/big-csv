@@ -45,7 +45,7 @@ describe('CSV', _ => {
 
     describe('write', _ => {
         it('should append objects as lines to the csv', done => {
-            let tmpCsv = new CSV(tmpPath)
+            let tmpCsv = new CSV(tmpPath, { flags: 'w+' })
             tmpCsv.write({
                 string: 'apples, oranges, and grapefruit',
                 integer: 3,

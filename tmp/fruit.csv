@@ -1,8 +1,2 @@
 emptyString,float,integer,nested.item1,nested.item2,quotedString,string
 "",1.2,3,"apple","orange","They're going to eat lots of \"fruit.\"","apples, oranges, and grapefruit"
-emptyString,float,integer,nested.item1,nested.item2,quotedString,string
-"",1.2,3,"apple","orange","They're going to eat lots of \"fruit.\"","apples, oranges, and grapefruit"
-emptyString,float,integer,nested.item1,nested.item2,quotedString,string
-"",1.2,3,"apple","orange","They're going to eat lots of \"fruit.\"","apples, oranges, and grapefruit"
-emptyString,float,integer,nested.item1,nested.item2,quotedString,string
-"",1.2,3,"apple","orange","They're going to eat lots of \"fruit.\"","apples, oranges, and grapefruit"
