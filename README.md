@@ -24,9 +24,13 @@ id,name,weight,description,inventory.amount,inventory.price
 
 ```
 const CSV = require('reasonable-csv')
+
 let csv = new CSV('fruit.csv')
-csv.on('read', console.log)
-// outputs...
+csv.read().then(console.log)
+```
+
+Outputs:
+```
 [
     {
         "id": 1,
@@ -52,7 +56,6 @@ csv.on('read', console.log)
 ```
 
 ## Writing
-
 ```
 csv.write({
     "id": 3,
@@ -63,7 +66,12 @@ csv.write({
         "amount": 9232,
         "price": -252.00
     }
+}).then(_ => {
+    console.log('wrote object to csv')
 })
-// appends...
+```
+
+Creates the CSV, using the object's property names as a header, and appends a row to the CSV:
+```
 3,Watermelon,100.5,"A strange green spherical type blob",9232,-252.00
 ```

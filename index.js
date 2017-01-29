@@ -1,13 +1,11 @@
 const fs = require('fs')
 const path = require('path')
 const readline = require('readline')
-const EventEmitter = require('events')
 const dottie = require('dottie')
 
-module.exports = class CSV extends EventEmitter {
+module.exports = class CSV {
 
     constructor(filepath, options = { flags: 'a', header: 1 }) {
-        super()
         this.options = options
         this.filepath = path.resolve(filepath)
         this.readStream = fs.createReadStream(this.filepath)
@@ -22,44 +20,73 @@ module.exports = class CSV extends EventEmitter {
     }
 
     read() {
-        let lineReader = readline.createInterface({
-            input: this.readStream
+        return new Promise((resolve, reject) => {
+            let lineReader = readline.createInterface({
+                input: this.readStream
+            })
+            let index = 0
+            this.data.length = 0
+            lineReader.on('line', line => {
+                if (index === 0) {
+                    this.header = this.parseLine(line)
+                }
+                if (index >= this.options.header) {
+                    let row = this.formatLine(this.parseLine(line))
+                    this.data.push(row)
+                }
+                index++
+            })
+            lineReader.on('close', _ => {
+                resolve(this.data)
+            })
         })
-        let index = 0
-        this.data.length = 0
-        lineReader.on('line', line => {
-            if (index === 0) {
-                this.header = this.parseLine(line)
-            }
-            if (index >= this.options.header) {
-                let row = this.formatLine(this.parseLine(line))
-                this.data.push(row)
-            }
-            index++
-        })
-        lineReader.on('close', this.emit.bind(this, 'read', this.data))
     }
 
-    write(object) {
-        if (!this.header) {
-            this.header = dottie.paths(object).sort()
-            this.writeStream.write(`${this.header.join(',')}\n`)
-        }
-        let row = []
-        for (let i in this.header) {
-            let column = this.header[i]
-            let value = dottie.get(object, column)
-            if (typeof value === 'string') {
-                let escaped = value
-                    .replace(/\"/g, '\\"')
-                    .replace(/\n/, '\\n')
-                    .replace(/,/, '\,')
-                value = `"${value.replace(/\"/, '\\"')}"`
+    writeHeader(arrayHeader) {
+        return new Promise((resolve, reject) => {
+            this.header = arrayHeader
+            this.writeStream.write(`${this.header.join(',')}\n`, error => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve()
+                }
+            })
+        })
+    }
+
+    writeRow(object) {
+        return new Promise((resolve, reject) => {
+            let row = []
+            for (let i in this.header) {
+                let column = this.header[i]
+                let value = dottie.get(object, column)
+                if (typeof value === 'string') {
+                    value = `"${value.replace(/"/g, '\\"')}"`
+                }
+                row.push(value)
             }
-            row.push(value)
+            this.writeStream.write(`${row.join(',')}\n`, error => {
+                if (error) {
+                    reject(error)
+                } else {
+                    this.length++
+                    resolve()
+                }
+            })
+        })
+    }
+
+    write(object, done) {
+        let result = Promise.resolve()
+        if (!this.header) {
+            let header = dottie.paths(object).sort()
+            result = this.writeHeader(header)
         }
-        this.writeStream.write(`${row.join(',')}\n`)
-        this.length++
+        result.then(_ => {
+            return this.writeRow(object)
+        })
+        return result
     }
 
     empty() {
